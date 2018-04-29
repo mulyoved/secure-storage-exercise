@@ -3,7 +3,15 @@
 Service that exposes SET and GET endpoints to save and retrieve values while storing them securely. All data at rest
 is securely encrypted with the key provided by the clients.
 
-Service use AWS lambda functions and AWS DynamoDb for fault tolerant and scalability
+# Implementation Notes
+- Service use AWS lambda functions fault tolerant and scalability
+- Use AWS DynamoDb for storage
+- Deployment is done using [serverless](https://serverless.com/)
+- Language is TypeScript
+- Unit tetsing using jest
+- e2e testing using jest, as this is API product jest + axiom for rest API work well
+- Encryption is done using node build-in crypto node-crypto-gcm with a small wrapper [crypto-gcm](https://www.npmjs.com/package/crypto-gcm)
+GCM is rather popular authenticated encryption algorithm designed to provide both data authenticity (integrity) and confidentiality
 
 # Usage
 
@@ -50,17 +58,16 @@ yarn e2e-test
 - GET with wildcards use DynamoDB scan which scan the entire table,
 in most use cases this should be efficient enough,
 depending on the usage pattern maybe need to consider using SQL database or
-partition the DynamoDB using some prefixed hash
+organize DynamoDB keys differently
 
 # Todo/To Improve
 - Documentation, browser examples if needed
-- Implement delete API or call directly to delete the test records before running the test, right now after initial run values are just updated and not created
+- Implement delete API, this will help to write more complete testing so can clean the database before running the test, right now after initial run values are just updated and not created
 - Set a fixed URL so in case the service need to be removed and
 deploy again or deploy in a different region end point url stay the same
 - Connect to centralized logging like splunk
 - Connect to centralized errors reports like sentry
 - AWS API pagination for large get results, currently will return error if result size exceed AWS limits
-
 
 # Hints
 
