@@ -26,29 +26,6 @@ provider:
 
 
 functions:
-  hello:
-    handler: handler.hello
-    events:
-      - http:
-          method: get
-          path: hello
-
-  create:
-    handler: src/todos/create.create
-    events:
-      - http:
-          path: todos
-          method: post
-          cors: true
-
-  list:
-    handler: src/todos/list.list
-    events:
-      - http:
-          path: list
-          method: post
-          cors: true
-
   set:
     handler: src/secure-values/handler.set
     events:

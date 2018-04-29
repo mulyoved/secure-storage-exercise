@@ -4,14 +4,14 @@ Service that exposes SET and GET endpoints to save and retrieve values while sto
 is securely encrypted with the key provided by the clients.
 
 # Implementation Notes
-- Service use AWS lambda functions fault tolerant and scalability
-- Use AWS DynamoDb for storage
+- Service use AWS lambda functions for fault tolerant and scalability
+- Use AWS DynamoDb for storage, again out of the box fault tolerant and scalability
 - Deployment is done using [serverless](https://serverless.com/)
 - Language is TypeScript
 - Unit tetsing using jest
 - e2e testing using jest, as this is API product jest + axiom for rest API work well
-- Encryption is done using node build-in crypto node-crypto-gcm with a small wrapper [crypto-gcm](https://www.npmjs.com/package/crypto-gcm)
-GCM is rather popular authenticated encryption algorithm designed to provide both data authenticity (integrity) and confidentiality
+- Encryption is done using node build-in crypto node-crypto-gcm with a small wrapper [crypto-gcm](https://www.npmjs.com/package/crypto-gcm),
+GCM is rather popular authenticated encryption algorithm designed to provide both data authenticity (integrity) and confidentiality.
 
 # Usage
 
