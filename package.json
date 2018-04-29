@@ -4,12 +4,19 @@
   "description": "Service that exposes two endpoints to save and retrieve values while storing them securely.",
   "main": "handler.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "deploy": "serverless deploy",
+    "deploy-set": "serverless deploy function --function set",
+    "deploy-get": "serverless deploy function --function get",
+    "test": "jest --testPathPattern src",
+    "e2e-test": "jest --testPathPattern e2e-tests"
   },
   "devDependencies": {
     "@types/aws-lambda": "0.0.22",
+    "@types/aws-sdk": "^2.7.0",
     "@types/jest": "^22.2.3",
     "@types/node": "^8.0.57",
+    "axios": "^0.18.0",
+    "jest": "^22.4.3",
     "serverless-webpack": "^4.0.0",
     "ts-jest": "^22.4.4",
     "ts-loader": "^2.3.7",
@@ -17,10 +24,11 @@
     "webpack": "^3.6.0"
   },
   "jest": {
+    "testEnvironment": "node",
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     },
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(tsx?)$",
     "moduleFileExtensions": [
       "ts",
       "tsx",
@@ -31,5 +39,9 @@
     ]
   },
   "author": "mulyoved",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "aws-sdk": "^2.229.1",
+    "crypto-gcm": "^0.0.9"
+  }
 }

@@ -8,6 +8,22 @@ plugins:
 provider:
   name: aws
   runtime: nodejs6.10
+  region: eu-west-2
+  profile: secure-storage-exercise
+
+  environment:
+      DYNAMODB_TABLE: ${self:service}-${opt:stage, self:provider.stage}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.DYNAMODB_TABLE}"
+
 
 functions:
   hello:
@@ -16,3 +32,54 @@ functions:
       - http:
           method: get
           path: hello
+
+  create:
+    handler: src/todos/create.create
+    events:
+      - http:
+          path: todos
+          method: post
+          cors: true
+
+  list:
+    handler: src/todos/list.list
+    events:
+      - http:
+          path: list
+          method: post
+          cors: true
+
+  set:
+    handler: src/secure-values/handler.set
+    events:
+      - http:
+          path: set
+          method: post
+          cors: true
+
+  get:
+    handler: src/secure-values/handler.get
+    events:
+      - http:
+          path: get
+          method: post
+          cors: true
+
+resources:
+  Resources:
+    SecureValuesDynamoDbTable:
+      Type: 'AWS::DynamoDB::Table'
+      DeletionPolicy: Retain
+      Properties:
+        AttributeDefinitions:
+          -
+            AttributeName: id
+            AttributeType: S
+        KeySchema:
+          -
+            AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        TableName: ${self:provider.environment.DYNAMODB_TABLE}
