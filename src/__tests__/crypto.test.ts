@@ -15,8 +15,6 @@ test("encrypt/decrypt keep value type", () => {
   const check = (value: any) => {
     const key = generateKey();
 
-    console.log("key", key);
-
     const encryptedValue = encrypt(value, key);
 
     const decrypted = decrypt(encryptedValue, key);
