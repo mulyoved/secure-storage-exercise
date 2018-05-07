@@ -1,7 +1,7 @@
 import axios from "axios";
 import { generateKey } from "../src/secure-values/crypto";
 
-const baseURI = "https://iwiexmyvl1.execute-api.eu-west-2.amazonaws.com/dev/";
+const baseURI = "https://2zz3sx8353.execute-api.eu-west-2.amazonaws.com/dev/";
 
 const set = async (id: string, encryption_key: string, value: any) =>
   await axios.post(`${baseURI}set`, { id, value, encryption_key });
